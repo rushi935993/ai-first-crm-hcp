@@ -1,11 +1,6 @@
-"""
-Import every SQLAlchemy model here.
-
-Alembic imports this module to discover models.
-"""
+# app/db/base.py
 
 from app.db.session import Base
 
-# Future imports:
-# from app.models.hcp import HCP
-# from app.models.interaction import Interaction
+# Import models so SQLAlchemy/Alembic discovers them.
+from app.models.hcp import HCP  # noqa: F401
