@@ -1,5 +1,21 @@
 import type { HCP } from "./hcp";
-import type { InteractionResponse } from "@/features/interaction/types";
+import type { Interaction } from "@/types/interaction";
+
+
+export interface MonthlyInteraction {
+  month: string;
+  interactions: number;
+}
+
+export interface ChartItem {
+  name: string;
+  value: number;
+}
+
+export interface SpecialtyChart {
+  specialty: string;
+  interactions: number;
+}
 
 export interface DashboardResponse {
   total_hcps: number;
@@ -8,5 +24,10 @@ export interface DashboardResponse {
   compliance_rate: number;
 
   recent_hcps: HCP[];
-  recent_interactions: InteractionResponse[];
+  recent_interactions: Interaction[];
+  priority_distribution: ChartItem[];
+
+  monthly_interactions: MonthlyInteraction[];
+  sentiment_distribution: ChartItem[];
+  top_specialties: SpecialtyChart[];
 }

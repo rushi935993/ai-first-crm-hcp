@@ -4,7 +4,7 @@ import Button from "@/components/ui/Button";
 import HCPForm from "./HCPForm";
 
 import { useUpdateHCP } from "../hooks/useUpdateHCP";
-
+import { toast } from "sonner";
 import type { HCP, CreateHCPRequest } from "@/types/hcp";
 interface Props {
   hcp: HCP;
@@ -17,20 +17,23 @@ export default function EditHCPDialog({
 
   const mutation = useUpdateHCP();
 
-  const handleSubmit = async (
-    data: CreateHCPRequest
-  ) => {
+  const handleSubmit = async (data: CreateHCPRequest) => {
     try {
-      await mutation.mutateAsync({
-        id: hcp.id,
-        payload: data,
-      });
+        await mutation.mutateAsync({
+            id: hcp.id,
+            payload: data,
+        });
 
-      setOpen(false);
+        toast.success("HCP updated successfully.");
+
+        setOpen(false);
+
     } catch (error) {
-      console.error(error);
+        console.error(error);
+
+        toast.error("Failed to update HCP.");
     }
-  };
+};
 
   return (
     <>

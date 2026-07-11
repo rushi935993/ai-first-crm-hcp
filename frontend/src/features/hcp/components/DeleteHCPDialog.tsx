@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import Button from "@/components/ui/Button";
 import { useDeleteHCP } from "../hooks/useDeleteHCP";
+import { toast } from "sonner";
 
 interface Props {
   id: string;
@@ -18,12 +19,18 @@ export default function DeleteHCPDialog({
 
   const handleDelete = async () => {
     try {
-      await mutation.mutateAsync(id);
-      setOpen(false);
+        await mutation.mutateAsync(hcp.id);
+
+        toast.success("HCP deleted successfully.");
+
+        onlose();
+
     } catch (error) {
-      console.error(error);
+        console.error(error);
+
+        toast.error("Failed to delete HCP.");
     }
-  };
+    };
 
   return (
     <>

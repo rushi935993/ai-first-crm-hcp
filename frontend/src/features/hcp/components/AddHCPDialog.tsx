@@ -1,6 +1,6 @@
 import Button from "@/components/ui/Button";
 import { useState } from "react";
-
+import { toast } from "sonner";
 import HCPForm from "./HCPForm";
 import { useCreateHCP } from "../hooks/useCreateHCP";
 
@@ -15,10 +15,13 @@ export default function AddHCPDialog() {
     try {
         await mutation.mutateAsync(data);
 
+        toast.success("HCP created successfully.");
+
         setOpen(false);
 
     } catch (error) {
         console.error(error);
+        toast.error("Failed to create HCP.");
     }
   };
 

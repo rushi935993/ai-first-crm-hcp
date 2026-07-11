@@ -1,7 +1,7 @@
 import {
   ResponsiveContainer,
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -9,19 +9,19 @@ import {
 } from "recharts";
 
 import Card from "@/components/ui/Card";
-import type { MonthlyInteraction } from "@/types/dashboard";
+import type { SpecialtyChart } from "@/types/dashboard";
 
 interface Props {
-  data: MonthlyInteraction[];
+  data: SpecialtyChart[];
 }
 
-export default function InteractionTrendChart({
+export default function TopSpecialtyChart({
   data,
 }: Props) {
   return (
     <Card>
-      <h2 className="text-xl font-semibold mb-6">
-        Monthly Interaction Trend
+      <h2 className="text-xl font-semibold mb-4">
+        Top Specialties
       </h2>
 
       <div className="h-80">
@@ -29,22 +29,22 @@ export default function InteractionTrendChart({
           width="100%"
           height="100%"
         >
-          <LineChart data={data}>
+          <BarChart data={data}>
+
             <CartesianGrid strokeDasharray="3 3" />
 
-            <XAxis dataKey="month" />
+            <XAxis dataKey="specialty" />
 
             <YAxis />
 
             <Tooltip />
 
-            <Line
-              type="monotone"
+            <Bar
               dataKey="interactions"
-              stroke="#2563eb"
-              strokeWidth={3}
+              fill="#2563eb"
             />
-          </LineChart>
+
+          </BarChart>
         </ResponsiveContainer>
       </div>
     </Card>

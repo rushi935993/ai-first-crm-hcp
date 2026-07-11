@@ -12,9 +12,9 @@ class DashboardService:
     ):
         total_hcps = db.query(HCP).count()
 
-        total_interactions = (
-            db.query(Interaction).count()
-        )
+        total_interactions = db.query(
+            Interaction
+        ).count()
 
         high_priority = (
             db.query(Interaction)
@@ -64,4 +64,22 @@ class DashboardService:
             "compliance_rate": compliance_rate,
             "recent_hcps": recent_hcps,
             "recent_interactions": recent_interactions,
+            "monthly_interactions": [
+                {
+                    "month": "Jan",
+                    "interactions": 5,
+                },
+                {
+                    "month": "Feb",
+                    "interactions": 8,
+                },
+                {
+                    "month": "Mar",
+                    "interactions": 12,
+                },
+                {
+                    "month": "Apr",
+                    "interactions": 7,
+                },
+            ],
         }

@@ -1,4 +1,3 @@
-import { Trash2 } from "lucide-react";
 
 import EditHCPDialog from "./EditHCPDialog";
 import type { HCP } from "@/types/hcp";

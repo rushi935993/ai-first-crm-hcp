@@ -4,9 +4,12 @@ import StatCard from "@/components/dashboard/StatCard";
 import RecentHCPTable from "@/components/dashboard/RecentHCPTable";
 import RecentInteractionTable from "@/components/dashboard/RecentInteractionTable";
 import AIInsights from "@/components/dashboard/AIInsights";
-
+import PriorityPieChart from "@/components/dashboard/PriorityPieChart";
 import PageHeader from "@/components/common/PageHeader";
 import Spinner from "@/components/ui/Spinner";
+import InteractionTrendChart from "@/components/dashboard/InteractionTrendChart";
+import SentimentPieChart from "@/components/dashboard/SentimentPieChart";
+import TopSpecialtyChart from "@/components/dashboard/TopSpecialtyChart";
 
 export default function Dashboard() {
   const { data, isLoading, isError } = useDashboard();
@@ -61,23 +64,48 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
 
-        <RecentHCPTable
-          hcps={data.recent_hcps}
-        />
+            <InteractionTrendChart
+                data={data.monthly_interactions}
+            />
 
-        <RecentInteractionTable
-          interactions={data.recent_interactions}
-        />
+            <AIInsights
+                dashboard={data}
+            />
 
-      </div>
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
+
+            <PriorityPieChart
+                data={data.priority_distribution}
+            />
+
+            <SentimentPieChart
+                data={data.sentiment_distribution}
+            />
+
+        </div>
 
       <div className="mt-8">
 
-        <AIInsights
-          dashboard={data}
+        <TopSpecialtyChart
+            data={data.top_specialties}
         />
 
-      </div>
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
+
+        <RecentHCPTable
+            hcps={data.recent_hcps}
+        />
+
+        <RecentInteractionTable
+            interactions={data.recent_interactions}
+        />
+
+        </div>
+
 
     </div>
   );

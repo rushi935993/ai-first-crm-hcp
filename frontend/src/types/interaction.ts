@@ -24,3 +24,16 @@ export interface Interaction {
 
   updated_at: string;
 }
+
+export interface CreateInteractionRequest {
+  hcp_id: string;
+  interaction_type: string;
+  raw_input: string;
+  notes?: string | null;
+}
+
+export interface UpdateInteractionRequest {
+  interaction_type: string;
+  raw_input: string;
+  notes?: string | null;
+}
