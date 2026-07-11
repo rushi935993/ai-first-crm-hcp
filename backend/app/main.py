@@ -39,8 +39,10 @@ app.middleware("http")(log_requests)
 register_exception_handlers(app)
 
 # Register all API routes
-app.include_router(api_router)
-
+app.include_router(
+    api_router,
+    prefix="/api",
+)
 
 @app.get("/")
 def root():

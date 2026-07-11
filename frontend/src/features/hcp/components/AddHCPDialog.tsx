@@ -1,29 +1,32 @@
+import Button from "@/components/ui/Button";
 import { useState } from "react";
 
 import HCPForm from "./HCPForm";
 import { useCreateHCP } from "../hooks/useCreateHCP";
+
+import type { CreateHCPRequest } from "@/types/hcp";
 export default function AddHCPDialog() {
   const [open, setOpen] = useState(false);
 
   const mutation = useCreateHCP();
-  const handleSubmit = async (data: any) => {
-    console.log("Form Data:", data);
+  const handleSubmit = async (
+    data: CreateHCPRequest
+  ) => {
+    try {
+        await mutation.mutateAsync(data);
 
-    await mutation.mutateAsync(data);
+        setOpen(false);
 
-    console.log("Mutation Success");
-
-    setOpen(false);
-};
+    } catch (error) {
+        console.error(error);
+    }
+  };
 
   return (
     <>
-      <button
-        onClick={() => setOpen(true)}
-        className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
-      >
+      <Button onClick={() => setOpen(true)}>
         + Add HCP
-      </button>
+      </Button>
 
       {open && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -36,12 +39,12 @@ export default function AddHCPDialog() {
                 Add New HCP
               </h2>
 
-              <button
+              <Button
+                variant="secondary"
                 onClick={() => setOpen(false)}
-                className="text-2xl"
-              >
+                >
                 ×
-              </button>
+                </Button>
 
             </div>
 

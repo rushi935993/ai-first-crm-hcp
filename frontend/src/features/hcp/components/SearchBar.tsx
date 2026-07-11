@@ -1,3 +1,5 @@
+import Input from "@/components/ui/Input";
+
 type SearchBarProps = {
   value: string;
   onChange: (value: string) => void;
@@ -8,7 +10,7 @@ export default function SearchBar({
   onChange,
 }: SearchBarProps) {
   return (
-    <input
+    <Input
       type="text"
       placeholder="Search doctor..."
       value={value}

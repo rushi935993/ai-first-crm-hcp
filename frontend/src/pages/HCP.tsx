@@ -2,9 +2,12 @@ import { useMemo, useState } from "react";
 
 import SearchBar from "@/features/hcp/components/SearchBar";
 import HCPTable from "@/features/hcp/components/HCPTable";
-import { useHCP } from "@/features/hcp/hooks/useHCP";
 import AddHCPDialog from "@/features/hcp/components/AddHCPDialog";
 
+import PageHeader from "@/components/common/PageHeader";
+import ErrorState from "@/components/common/ErrorState";
+
+import { useHCP } from "@/features/hcp/hooks/useHCP";
 type HCP = {
   id: string;
   doctor_name: string;
@@ -28,38 +31,28 @@ export default function HCP() {
 
   if (isLoading) {
     return (
-      <div className="text-xl font-semibold">
-        Loading HCPs...
-      </div>
+        <div className="flex justify-center py-16">
+        Loading...
+        </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="text-red-600">
-        Failed to load HCPs.
-      </div>
+        <ErrorState
+        message="Failed to load healthcare professionals."
+        />
     );
   }
 
   return (
     <div>
 
-      <div className="flex justify-between items-center mb-6">
-
-        <div>
-            <h1 className="text-3xl font-bold">
-            HCP Management
-            </h1>
-
-            <p className="text-gray-500">
-            Manage healthcare professionals
-            </p>
-        </div>
-
-        <AddHCPDialog />
-
-      </div>
+      <PageHeader
+        title="HCP Management"
+        subtitle="Manage healthcare professionals"
+        action={<AddHCPDialog />}
+      />
 
       <SearchBar
         value={search}
