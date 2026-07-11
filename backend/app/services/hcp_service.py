@@ -4,7 +4,7 @@ from app.models.hcp import HCP
 from app.repositories.hcp_repository import HCPRepository
 from app.schemas.hcp import HCPCreate, HCPUpdate
 from app.core.exceptions import DuplicateHCPException
-
+from fastapi import HTTPException, status
 
 class HCPService:
     """
@@ -87,3 +87,21 @@ class HCPService:
         hcp: HCP,
     ) -> None:
         self.repository.delete(db, hcp)
+
+    def get_or_raise(
+        self,
+        db: Session,
+        hcp_id: str,
+    ) -> HCP:
+        """
+        Retrieve an HCP or raise 404 if it doesn't exist.
+        """
+        hcp = self.repository.get_by_id(db, hcp_id)
+
+        if not hcp:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="HCP not found",
+            )
+
+        return hcp

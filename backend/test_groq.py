@@ -1,12 +1,11 @@
 from langchain_groq import ChatGroq
-
 from app.core.config import settings
-
-print("Groq key prefix:", settings.GROQ_API_KEY[:10])
-print("Model:", settings.MODEL_NAME)
 
 llm = ChatGroq(
     api_key=settings.GROQ_API_KEY,
     model=settings.MODEL_NAME,
-    temperature=0,
 )
+
+response = llm.invoke("Say hello.")
+
+print(response.content)

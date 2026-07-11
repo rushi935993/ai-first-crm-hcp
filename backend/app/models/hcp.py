@@ -1,7 +1,11 @@
+from typing import TYPE_CHECKING
+
 from sqlalchemy import Boolean, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.models.base_model import BaseModel
 
+if TYPE_CHECKING:
+    from app.models.interaction import Interaction
 
 class HCP(BaseModel):
     """
@@ -57,4 +61,10 @@ class HCP(BaseModel):
         Boolean,
         default=True,
         nullable=False,
+    )
+
+    interactions: Mapped[list["Interaction"]] = relationship(
+        "Interaction",
+        back_populates="hcp",
+        cascade="all, delete-orphan",
     )
