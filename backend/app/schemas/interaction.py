@@ -46,3 +46,10 @@ class InteractionResponse(BaseModel):
     created_at: datetime
 
     updated_at: datetime
+
+from app.ai.models import AIAnalysis
+
+
+class ProcessInteractionResponse(BaseModel):
+    interaction: InteractionResponse
+    analysis: AIAnalysis

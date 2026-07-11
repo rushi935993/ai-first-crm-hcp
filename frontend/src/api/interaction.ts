@@ -1,10 +1,20 @@
 import { api } from "./axios";
 
-export const processInteraction = async (payload: unknown) => {
+import type { InteractionRequest } from "@/features/interaction/types";
+
+export const processInteraction = async (
+  payload: InteractionRequest
+) => {
   const { data } = await api.post(
     "/interactions/process",
-    payload,
+    payload
   );
+
+  return data;
+};
+
+export const getInteractions = async () => {
+  const { data } = await api.get("/interactions");
 
   return data;
 };

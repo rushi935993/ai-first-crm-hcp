@@ -8,13 +8,53 @@ from app.schemas.interaction import (
 from app.services.ai_service import AIService
 from app.services.hcp_service import HCPService
 
+from uuid import UUID
 
+from app.core.exceptions import InteractionNotFoundException
 class InteractionService:
 
     def __init__(self):
         self.repository = InteractionRepository()
         self.ai_service = AIService()
         self.hcp_service = HCPService()
+
+    def list_interactions(
+        self,
+        db: Session,
+    ):
+        return self.repository.get_all(db)
+
+    def get_interaction(
+        self,
+        db: Session,
+        interaction_id: UUID,
+    ):
+        interaction = self.repository.get_by_id(
+            db,
+            interaction_id,
+        )
+
+        if not interaction:
+            raise InteractionNotFoundException(
+                "Interaction not found."
+            )
+
+        return interaction
+
+    def delete_interaction(
+        self,
+        db: Session,
+        interaction_id: UUID,
+    ):
+        interaction = self.get_interaction(
+            db,
+            interaction_id,
+        )
+
+        self.repository.delete(
+            db,
+            interaction,
+        )
 
     def process_interaction(
         self,
@@ -48,7 +88,12 @@ class InteractionService:
             priority=analysis.priority,
         )
 
-        return self.repository.create(
+        saved_interaction = self.repository.create(
             db,
             interaction,
         )
+
+        return {
+            "interaction": saved_interaction,
+            "analysis": analysis,
+        }

@@ -4,3 +4,7 @@ class HCPNotFoundException(Exception):
 
 class DuplicateHCPException(Exception):
     """Raised when an HCP with the same email already exists."""
+
+
+class InteractionNotFoundException(Exception):
+    """Raised when the requested interaction does not exist."""
