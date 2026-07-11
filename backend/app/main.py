@@ -2,8 +2,11 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from app.api.router import api_router
 from app.core.config import settings
+from app.core.exception_handlers import register_exception_handlers
 from app.db.init_db import init_db
+from app.middleware.logging import log_requests
 
 
 @asynccontextmanager
@@ -17,6 +20,15 @@ app = FastAPI(
     version=settings.APP_VERSION,
     lifespan=lifespan,
 )
+
+# Register middleware
+app.middleware("http")(log_requests)
+
+# Register global exception handlers
+register_exception_handlers(app)
+
+# Register all API routes
+app.include_router(api_router)
 
 
 @app.get("/")

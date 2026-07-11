@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.models.hcp import HCP
 from app.repositories.hcp_repository import HCPRepository
 from app.schemas.hcp import HCPCreate, HCPUpdate
+from app.core.exceptions import DuplicateHCPException
 
 
 class HCPService:
@@ -30,7 +31,7 @@ class HCPService:
             )
 
             if existing:
-                raise ValueError("HCP with this email already exists.")
+                raise DuplicateHCPException("HCP with this email already exists.")
 
         hcp = HCP(
             doctor_name=hcp_data.doctor_name,
