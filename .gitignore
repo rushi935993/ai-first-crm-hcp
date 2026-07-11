@@ -24,3 +24,7 @@ Thumbs.db
 
 data/
 *.db
+
+.env
+.env.*
+!.env.example
