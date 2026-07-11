@@ -1,20 +1,20 @@
 import { api } from "./axios";
+import type { CreateInteractionRequest } from "@/types/interaction";
 
-import type { InteractionRequest } from "@/features/interaction/types";
-
-export const processInteraction = async (
-  payload: InteractionRequest
-) => {
+// Existing function
+export async function processInteraction(
+  payload: CreateInteractionRequest
+) {
   const { data } = await api.post(
     "/interactions/process",
     payload
   );
 
   return data;
-};
+}
 
-export const getInteractions = async () => {
+// New function
+export async function getInteractions() {
   const { data } = await api.get("/interactions");
-
   return data;
-};
+}

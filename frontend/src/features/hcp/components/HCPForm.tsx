@@ -4,22 +4,31 @@ import type { CreateHCPRequest } from "@/types/hcp";
 type Props = {
   onSubmit: (data: CreateHCPRequest) => void;
   isLoading: boolean;
+  initialValues?: CreateHCPRequest;
+  submitLabel?: string;
 };
 
 export default function HCPForm({
   onSubmit,
   isLoading,
+  initialValues,
+  submitLabel = "Save HCP",
 }: Props) {
   const {
     register,
     handleSubmit,
     reset,
-  } = useForm<CreateHCPRequest>();
+    } = useForm<CreateHCPRequest>({
+    defaultValues: initialValues,
+});
 
   const submitForm = (data: CreateHCPRequest) => {
     onSubmit(data);
-    reset();
-  };
+
+    if (!initialValues) {
+        reset();
+    }
+    };
 
   return (
     <form
@@ -122,7 +131,7 @@ export default function HCPForm({
         disabled={isLoading}
         className="w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-3 font-semibold"
       >
-        {isLoading ? "Saving..." : "Save HCP"}
+        {isLoading ? "Saving..." : submitLabel}
       </button>
     </form>
   );

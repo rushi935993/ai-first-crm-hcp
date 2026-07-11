@@ -1,13 +1,8 @@
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 
-type HCP = {
-  id: string;
-  doctor_name: string;
-  specialty: string;
-  hospital: string;
-  city: string;
-};
-
+import EditHCPDialog from "./EditHCPDialog";
+import type { HCP } from "@/types/hcp";
+import DeleteHCPDialog from "./DeleteHCPDialog";
 type HCPRowProps = {
   hcp: HCP;
 };
@@ -27,19 +22,14 @@ export default function HCPRow({ hcp }: HCPRowProps) {
 
       <td>
         <div className="flex gap-3">
-          <button
-            className="text-blue-600 hover:text-blue-800"
-            title="Edit"
-          >
-            <Pencil size={18} />
-          </button>
+            <EditHCPDialog
+              hcp={hcp}
+            />
 
-          <button
-            className="text-red-600 hover:text-red-800"
-            title="Delete"
-          >
-            <Trash2 size={18} />
-          </button>
+          <DeleteHCPDialog
+            id={hcp.id}
+            doctorName={hcp.doctor_name}
+            />
         </div>
       </td>
     </tr>
