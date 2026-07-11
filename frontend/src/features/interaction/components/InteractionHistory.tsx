@@ -9,7 +9,7 @@ import { useInteractions } from "@/features/interaction/hooks/useInteractions";
 import type { Interaction } from "@/types/interaction";
 import ViewInteractionDialog from "@/features/interaction/components/ViewInteractionDialog";
 import { useMemo, useState } from "react";
-
+import InteractionFilters from "@/features/interaction/components/InteractionFilters";
 import InteractionSearchBar from "@/features/interaction/components/InteractionSearchBar";
 
 export default function InteractionHistory() {
@@ -24,6 +24,9 @@ export default function InteractionHistory() {
 
   const [search, setSearch] =
   useState("");
+
+  const [typeFilter, setTypeFilter] = useState("");
+  const [priorityFilter, setPriorityFilter] = useState("");
 
   if (isLoading) {
     return (
@@ -42,12 +45,32 @@ export default function InteractionHistory() {
   }
   
   const filteredInteractions = useMemo(() => {
-    return data.filter((interaction) =>
+    return data.filter((interaction) => {
+        const matchesSearch =
         interaction.raw_input
-        .toLowerCase()
-        .includes(search.toLowerCase())
-    );
-    }, [data, search]);
+            .toLowerCase()
+            .includes(search.toLowerCase());
+
+        const matchesType =
+        !typeFilter ||
+        interaction.interaction_type === typeFilter;
+
+        const matchesPriority =
+        !priorityFilter ||
+        interaction.priority === priorityFilter;
+
+        return (
+        matchesSearch &&
+        matchesType &&
+        matchesPriority
+        );
+    });
+    }, [
+    data,
+    search,
+    typeFilter,
+    priorityFilter,
+    ]);
 
   return (
     <div className="space-y-6">
@@ -59,6 +82,13 @@ export default function InteractionHistory() {
       <InteractionSearchBar
         value={search}
         onChange={setSearch}
+        />
+
+      <InteractionFilters
+        type={typeFilter}
+        priority={priorityFilter}
+        onTypeChange={setTypeFilter}
+        onPriorityChange={setPriorityFilter}
         />
 
       <InteractionTable

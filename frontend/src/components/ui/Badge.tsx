@@ -1,26 +1,27 @@
 import type { ReactNode } from "react";
 
 interface BadgeProps {
-  children: ReactNode;
-  variant?: "success" | "warning" | "danger" | "info";
+  text: string;
+  color: "green" | "yellow" | "red" | "blue" | "gray";
 }
 
-export default function Badge({
-  children,
-  variant = "info",
-}: BadgeProps) {
-  const styles = {
-    success: "bg-green-100 text-green-700",
-    warning: "bg-yellow-100 text-yellow-700",
-    danger: "bg-red-100 text-red-700",
-    info: "bg-blue-100 text-blue-700",
-  };
+const colorClasses = {
+  green: "bg-green-100 text-green-700",
+  yellow: "bg-yellow-100 text-yellow-700",
+  red: "bg-red-100 text-red-700",
+  blue: "bg-blue-100 text-blue-700",
+  gray: "bg-gray-100 text-gray-700",
+};
 
+export default function Badge({
+  text,
+  color,
+}: BadgeProps) {
   return (
     <span
-      className={`px-3 py-1 rounded-full text-sm font-medium ${styles[variant]}`}
+      className={`px-3 py-1 rounded-full text-sm font-medium ${colorClasses[color]}`}
     >
-      {children}
+      {text}
     </span>
   );
 }
