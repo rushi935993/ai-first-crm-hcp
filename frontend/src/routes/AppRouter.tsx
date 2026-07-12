@@ -5,16 +5,33 @@ import DashboardLayout from "@/layouts/DashboardLayout";
 import Dashboard from "@/pages/Dashboard";
 import HCP from "@/pages/HCP";
 import Interaction from "@/pages/Interaction";
-import NotFound from "@/pages/NotFound";
 import Analytics from "@/pages/Analytics";
 import Settings from "@/pages/Settings";
 import InteractionHistory from "@/pages/InteractionHistory";
+import NotFound from "@/pages/NotFound";
+
+import Login from "@/features/auth/pages/Login";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<DashboardLayout />}>
+
+        {/* Public Route */}
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        {/* Protected Routes */}
+        <Route
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/" element={<Dashboard />} />
           <Route path="/hcp" element={<HCP />} />
           <Route path="/interaction" element={<Interaction />} />
@@ -26,7 +43,12 @@ export default function AppRouter() {
           />
         </Route>
 
-        <Route path="*" element={<NotFound />} />
+        {/* 404 */}
+        <Route
+          path="*"
+          element={<NotFound />}
+        />
+
       </Routes>
     </BrowserRouter>
   );
