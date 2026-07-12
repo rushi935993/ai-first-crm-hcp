@@ -14,6 +14,8 @@ class Base(DeclarativeBase):
 engine = create_engine(
     settings.DATABASE_URL,
     echo=settings.APP_DEBUG,
+    pool_pre_ping=True,
+    pool_recycle=300,
 )
 
 SessionLocal = sessionmaker(
