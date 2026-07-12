@@ -10,27 +10,26 @@ interface Props {
 }
 
 export default function DeleteHCPDialog({
-  id,
-  doctorName,
+  id,doctorName,
 }: Props) {
   const [open, setOpen] = useState(false);
 
   const mutation = useDeleteHCP();
 
   const handleDelete = async () => {
-    try {
-        await mutation.mutateAsync(hcp.id);
+  try {
+    await mutation.mutateAsync(id);
 
-        toast.success("HCP deleted successfully.");
+    toast.success("HCP deleted successfully.");
 
-        onlose();
+    setOpen(false);
 
-    } catch (error) {
-        console.error(error);
+  } catch (error) {
+    console.error(error);
 
-        toast.error("Failed to delete HCP.");
-    }
-    };
+    toast.error("Failed to delete HCP.");
+  }
+};
 
   return (
     <>

@@ -1,13 +1,6 @@
 import HCPRow from "./HCPRow";
 
-type HCP = {
-  id: string;
-  doctor_name: string;
-  specialty: string;
-  hospital: string;
-  city: string;
-};
-
+import type { HCP } from "@/types/hcp";
 type HCPTableProps = {
   hcps: HCP[];
 };
