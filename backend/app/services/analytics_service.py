@@ -12,15 +12,16 @@ class AnalyticsService:
     ):
         rows = (
             db.query(
-                func.strftime(
-                    "%Y-%m",
+                func.to_char(
                     Interaction.created_at,
+                    "YYYY-MM",
                 ).label("month"),
                 func.count(
                     Interaction.id
                 ).label("count"),
             )
             .group_by("month")
+            .order_by("month")
             .all()
         )
 
